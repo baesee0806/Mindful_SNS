@@ -1,10 +1,13 @@
-import RegisterPage from '../register/page';
+import LayoutContainer from '../_components/LayoutContainer';
+import LoginFrom from '../_components/LoginFrom';
+import ServiceImage from '../_components/ServiceImage';
 
 const LoginPage = () => {
 	return (
-		<div>
-			<RegisterPage />
-		</div>
+		<LayoutContainer>
+			<ServiceImage />
+			<LoginFrom />
+		</LayoutContainer>
 	);
 };
 
