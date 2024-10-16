@@ -1,9 +1,9 @@
-import LoginFrom from '../_components/LoginFrom';
+import RegisterPage from '../register/page';
 
 const LoginPage = () => {
 	return (
 		<div>
-			<LoginFrom />
+			<RegisterPage />
 		</div>
 	);
 };
