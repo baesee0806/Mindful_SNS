@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/providers/StyledComponentProvider';
+import QueryProvider from '@/providers/QueryProvider';
 import GlobalStyle from './globals';
 export const metadata: Metadata = {
 	title: 'Mindful SNS',
@@ -14,10 +15,12 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<StyledComponentsRegistry>
-					<GlobalStyle />
-					{children}
-				</StyledComponentsRegistry>
+				<QueryProvider>
+					<StyledComponentsRegistry>
+						<GlobalStyle />
+						{children}
+					</StyledComponentsRegistry>
+				</QueryProvider>
 			</body>
 		</html>
 	);

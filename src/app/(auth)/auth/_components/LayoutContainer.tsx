@@ -23,4 +23,9 @@ const Wrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	@media only screen and (max-width: 1150px) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 `;

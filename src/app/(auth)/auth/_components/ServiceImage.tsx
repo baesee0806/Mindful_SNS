@@ -27,6 +27,9 @@ const Container = styled.div`
 	position: relative;
 	width: 700px;
 	height: 400px;
+	@media only screen and (max-width: 1150px) {
+		display: none;
+	}
 `;
 
 const RotateImage = styled(Image)`

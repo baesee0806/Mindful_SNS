@@ -1,9 +1,13 @@
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
-export default function Home() {
-	if (true) {
-		return redirect('/auth/login');
-	}
+import MainPage from './_components/Test';
 
-	return <div>메인</div>;
-}
+const Home = () => {
+	return (
+		<div>
+			<MainPage />
+		</div>
+	);
+};
+
+export default Home;
