@@ -14,6 +14,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Helvetica", "Arial", sans-serif;
     
   }
+  ::-webkit-scrollbar {
+    display: none;
+}
 `;
 
 export default GlobalStyle;
