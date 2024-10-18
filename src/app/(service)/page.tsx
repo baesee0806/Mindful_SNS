@@ -1,13 +1,9 @@
 // import { redirect } from 'next/navigation';
 
-import MainPage from './_components/Test';
+import MainScreen from './_components/main/MainScreen';
 
 const Home = () => {
-	return (
-		<div>
-			<MainPage />
-		</div>
-	);
+	return <MainScreen />;
 };
 
 export default Home;
