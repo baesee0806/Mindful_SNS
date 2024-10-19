@@ -8,11 +8,20 @@ import {
 	SquarePlus,
 	Search,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 const ServicePageLayout = ({ children }: { children: React.ReactNode }) => {
+	const [isMessagePage, setIsMessagePage] = useState(false);
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			// 클라이언트 사이드에서만 실행
+			setIsMessagePage(window.location.pathname.includes('/message'));
+		}
+	}, []);
 	return (
 		<Container>
 			{/* side menu */}
-			<SidebarContainer>
+			<SidebarContainer $ismessagepage={isMessagePage.toString()}>
 				<SidebarHeader>
 					<TentTree />
 					<h1>Mindful</h1>
@@ -58,7 +67,7 @@ const Container = styled.div`
 	}
 `;
 // side menu
-const SidebarContainer = styled.div`
+const SidebarContainer = styled.div<{ $ismessagepage: string }>`
 	min-width: 70px;
 	height: 100%;
 	border-right: 1px solid #262626;
@@ -69,10 +78,10 @@ const SidebarContainer = styled.div`
 		align-items: center;
 	}
 	@media only screen and (max-width: 758px) {
+		${(props) => (props.$ismessagepage == 'true' ? 'display: none;' : '')}
 		height: 89px;
 		border-right: none;
 		border-bottom: 1px solid #262626;
-		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 	}
