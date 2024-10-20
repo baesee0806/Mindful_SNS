@@ -1,7 +1,8 @@
-import QueryProvider from '@/providers/QueryProbider';
 import type { Metadata } from 'next';
-import './globals.css';
-
+import StyledComponentsRegistry from '@/providers/StyledComponentProvider';
+import QueryProvider from '@/providers/QueryProvider';
+import GlobalStyle from './globals';
+import DetailModal from '@/components/DetailModal';
 export const metadata: Metadata = {
 	title: 'Mindful SNS',
 	description: '바른 SNS 서비스',
@@ -9,13 +10,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-}: Readonly<{
+}: {
 	children: React.ReactNode;
-}>) {
+}) {
 	return (
 		<html lang="en">
 			<body>
-				<QueryProvider>{children}</QueryProvider>
+				<QueryProvider>
+					<StyledComponentsRegistry>
+						<GlobalStyle />
+						{children}
+					</StyledComponentsRegistry>
+				</QueryProvider>
 			</body>
 		</html>
 	);
