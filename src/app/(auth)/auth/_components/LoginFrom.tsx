@@ -1,20 +1,44 @@
 'use client';
 import styled from 'styled-components';
 import GoogleLogo from '@/assets/svg/google_logo.svg';
+import { useState } from 'react';
 
 const LoginFrom = () => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const loginUser = async () => {
+		await fetch('/api/auth/login', {
+			method: 'POST',
+			body: JSON.stringify({ email, password }),
+			headers: { 'Content-Type': 'application/json' },
+		});
+	};
 	return (
 		<Container>
-			<FormContainer>
+			<FormContainer action={loginUser}>
 				{/* title */}
 				<FromTitle>Mindful</FromTitle>
 				{/* 아이디 */}
 				<FormInputWrap>
-					<FormInput type="text" id="username" placeholder="아이디" />
+					<FormInput
+						type="text"
+						id="username"
+						placeholder="아이디"
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
+					/>
 				</FormInputWrap>
 				{/* 비밀번호 */}
 				<FormInputWrap>
-					<FormInput type="password" id="password" placeholder="비밀번호" />
+					<FormInput
+						type="password"
+						id="password"
+						placeholder="비밀번호"
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+					/>
 				</FormInputWrap>
 				{/* 로그인 버튼 */}
 				<FormButton type="submit">로그인</FormButton>

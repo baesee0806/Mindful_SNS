@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/providers/StyledComponentProvider';
 import QueryProvider from '@/providers/QueryProvider';
 import GlobalStyle from './globals';
-import DetailModal from '@/components/DetailModal';
 export const metadata: Metadata = {
 	title: 'Mindful SNS',
 	description: '바른 SNS 서비스',
