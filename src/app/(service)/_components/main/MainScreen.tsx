@@ -9,7 +9,6 @@ import {
 	Heart,
 	ThumbsUp,
 } from 'lucide-react';
-import CreateFeedModal from '@/components/CreateFeedModal';
 
 const MainScreen = () => {
 	return (
