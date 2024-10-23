@@ -57,13 +57,20 @@ const LoginFrom = () => {
 
 			// Firebase ID Token 가져오기
 			const token = await user.getIdToken();
-
-			// 서버로 토큰 전송하여 쿠키에 uid 저장
-			await fetch('/api/auth/setCookie', {
-				method: 'POST',
-				body: JSON.stringify({ uid: user.uid, token }),
-				headers: { 'Content-Type': 'application/json' },
-			});
+			if (token) {
+				// 서버로 토큰 전송하여 쿠키에 uid 저장
+				await fetch('/api/auth/setCookie', {
+					method: 'POST',
+					body: JSON.stringify({ uid: user.uid, token }),
+					headers: { 'Content-Type': 'application/json' },
+				})
+					.then(() => {
+						window.location.reload();
+					})
+					.catch((error) => {
+						console.error('쿠키 저장 실패:', error);
+					});
+			}
 		} catch (error) {
 			console.error('로그인 실패:', error);
 		}
