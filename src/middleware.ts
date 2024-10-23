@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
-	if (pathname === '/auth/register') {
+	if (pathname === '/auth/register' && !cookies().has('uid')) {
 		return NextResponse.next();
 	}
 
