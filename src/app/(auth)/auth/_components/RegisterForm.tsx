@@ -1,19 +1,69 @@
 'use client';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useUserStore } from '@/store/auth/useAuthStore';
+import { registerSchema } from '@/libs/auth/authValidation';
 
 const RegisterForm = () => {
+	const { register, handleSubmit } = useForm<{
+		email: string;
+		password: string;
+		checkPassword: string;
+		userName: string;
+	}>({
+		defaultValues: {
+			email: '',
+			password: '',
+			checkPassword: '',
+			userName: '',
+		},
+		resolver: zodResolver(registerSchema),
+	});
+
+	const setUser = useUserStore((state) => state.setUser);
+
+	const signupUser = async (data: { email: string; password: string }) => {
+		try {
+			const res = await fetch('/api/auth/signup', {
+				method: 'POST',
+				body: JSON.stringify(data),
+				headers: { 'Content-Type': 'application/json' },
+			});
+
+			if (res.ok) {
+				const userData = await res.json();
+				setUser({
+					uid: userData.uid,
+					displayName: userData.displayName,
+					email: userData.email,
+				});
+			} else {
+				// react hot toast message
+				console.log('회원가입 실패');
+			}
+		} catch (error) {
+			console.log(error);
+			// react hot toast message
+		}
+	};
+
 	return (
 		<Container>
-			<FormContainer>
+			<FormContainer onSubmit={handleSubmit(signupUser)}>
 				{/* title */}
 				<FromTitle>Mindful</FromTitle>
 				{/* 아이디 */}
 				<FormInputWrap>
-					<FormInput type="text" id="username" placeholder="아이디" />
+					<FormInput type="text" placeholder="아이디" {...register('email')} />
 				</FormInputWrap>
 				{/* 비밀번호 */}
 				<FormInputWrap>
-					<FormInput type="password" id="password" placeholder="비밀번호" />
+					<FormInput
+						type="password"
+						placeholder="비밀번호"
+						{...register('password')}
+					/>
 				</FormInputWrap>
 				{/* 비밀번호 확인*/}
 				<FormInputWrap>
@@ -21,11 +71,17 @@ const RegisterForm = () => {
 						type="password"
 						id="checkPassword"
 						placeholder="비밀번호 확인"
+						{...register('checkPassword')}
 					/>
 				</FormInputWrap>
 				{/* 사용자 이름 */}
 				<FormInputWrap>
-					<FormInput type="text" id="userName" placeholder="사용자 이름" />
+					<FormInput
+						type="text"
+						id="userName"
+						placeholder="사용자 이름"
+						{...register('userName')}
+					/>
 				</FormInputWrap>
 				{/* 회원가입 버튼 */}
 				<FormButton type="submit">회원가입</FormButton>

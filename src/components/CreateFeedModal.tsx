@@ -1,18 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const CreateFeedModal = () => {
 	const [image, setImage] = useState<string | null>(null);
-
+	useEffect(() => {
+		setImage('');
+	}, []);
 	return (
 		<Container>
 			<CreateFeedWrapper>
 				<CreateFeedHeader>새 게시물 만들기</CreateFeedHeader>
 				<CreateFeedBody>
 					{image ? (
-						<img
+						<Image
 							src={image}
 							alt="uploaded"
 							style={{ width: '100%', height: '100%', objectFit: 'cover' }}
