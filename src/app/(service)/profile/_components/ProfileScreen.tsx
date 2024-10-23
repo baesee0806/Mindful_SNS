@@ -1,7 +1,10 @@
 'use client';
 import styled from 'styled-components';
 import { CircleUserRound } from 'lucide-react';
+// import { useParams } from 'next/navigation';
 const ProfileScreen = () => {
+	// const { id } = useParams<{ id: string }>();
+
 	return (
 		<Container>
 			<UserProfileWrapper>

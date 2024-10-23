@@ -1,4 +1,4 @@
-import ProfileScreen from './_components/ProfileScreen';
+import ProfileScreen from '../_components/ProfileScreen';
 
 const ProfilePage = () => {
 	return <ProfileScreen />;
