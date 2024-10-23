@@ -1,5 +1,3 @@
-// import { redirect } from 'next/navigation';
-
 import MainScreen from './_components/main/MainScreen';
 
 const Home = () => {

@@ -1,11 +1,10 @@
+import { cookies } from 'next/headers';
 import { auth } from '../firebase/firebaseClient';
 import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
-	// onAuthStateChanged,
 } from 'firebase/auth';
-import { cookies } from 'next/headers';
 
 // 쿠키 설정
 export function setCookie(name: string, value: string, maxAge: number) {
