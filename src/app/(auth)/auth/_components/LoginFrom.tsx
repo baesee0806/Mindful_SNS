@@ -1,12 +1,12 @@
 'use client';
 import styled from 'styled-components';
 import GoogleLogo from '@/assets/svg/google_logo.svg';
-import { useUserStore } from '@/store/auth/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/libs/auth/authValidation';
 import { auth } from '@/libs/firebase/firebaseClient';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { addUserInfoApi } from '@/libs/apis/userApi';
 
 const LoginFrom = () => {
 	const { register, handleSubmit } = useForm<{
@@ -20,27 +20,13 @@ const LoginFrom = () => {
 		resolver: zodResolver(loginSchema),
 	});
 
-	const setUser = useUserStore((state) => state.setUser);
-
 	const loginUser = async (data: { email: string; password: string }) => {
 		try {
-			const res = await fetch('/api/auth/login', {
+			await fetch('/api/auth/login', {
 				method: 'POST',
 				body: JSON.stringify(data),
 				headers: { 'Content-Type': 'application/json' },
 			});
-
-			if (res.ok) {
-				const userData = await res.json();
-				setUser({
-					uid: userData.uid,
-					displayName: userData.displayName,
-					email: userData.email,
-				});
-			} else {
-				// react hot toast message
-				console.log('로그인 실패');
-			}
 		} catch (error) {
 			console.log(error);
 
@@ -53,24 +39,27 @@ const LoginFrom = () => {
 
 		try {
 			const result = await signInWithPopup(auth, provider);
+
 			const user = result.user;
 
-			// Firebase ID Token 가져오기
-			const token = await user.getIdToken();
-			if (token) {
-				// 서버로 토큰 전송하여 쿠키에 uid 저장
-				await fetch('/api/auth/setCookie', {
-					method: 'POST',
-					body: JSON.stringify({ uid: user.uid, token }),
-					headers: { 'Content-Type': 'application/json' },
+			await addUserInfoApi({
+				user_id: user.uid,
+				email: user.email || '',
+				profile_img: user.photoURL || '',
+				display_name: user.displayName || '',
+			});
+
+			await fetch('/api/auth/setCookie', {
+				method: 'POST',
+				body: JSON.stringify({ uid: user.uid }),
+				headers: { 'Content-Type': 'application/json' },
+			})
+				.then(() => {
+					window.location.reload();
 				})
-					.then(() => {
-						window.location.reload();
-					})
-					.catch((error) => {
-						console.error('쿠키 저장 실패:', error);
-					});
-			}
+				.catch((error) => {
+					console.error('쿠키 저장 실패:', error);
+				});
 		} catch (error) {
 			console.error('로그인 실패:', error);
 		}

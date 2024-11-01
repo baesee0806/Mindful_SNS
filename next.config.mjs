@@ -4,7 +4,7 @@ const nextConfig = {
 		styledComponents: true,
 	},
 	images: {
-		domains: ['picsum.photos'],
+		domains: ['picsum.photos', 'firebasestorage.googleapis.com'],
 	},
 	webpack: (config) => {
 		config.module.rules.push({

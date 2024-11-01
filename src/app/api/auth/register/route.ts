@@ -1,12 +1,27 @@
 import { NextResponse } from 'next/server';
 import { signup } from '@/libs/auth/auth';
+import { addUserInfoApi } from '@/libs/apis/userApi';
 
 export async function POST(request: Request) {
-	const { email, password } = await request.json();
+	const { email, password, displayName } = await request.json();
 
 	try {
-		await signup(email, password);
-		return NextResponse.rewrite(new URL('/', request.url));
+		const userCredential = await signup(email, password, displayName);
+
+		await addUserInfoApi({
+			user_id: userCredential.uid,
+			email: email,
+			profile_img: '',
+			display_name: displayName,
+		})
+			.then(() => {
+				console.log('Document successfully written!');
+			})
+			.catch((error) => {
+				console.log('Error adding document: ', error);
+			});
+
+		return NextResponse.json({ error: 'Signup success' }, { status: 200 });
 	} catch (error) {
 		if (error instanceof Error) {
 			console.error(error.message);
