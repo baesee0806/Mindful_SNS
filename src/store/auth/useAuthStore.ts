@@ -3,11 +3,16 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 // 유저 상태 타입 정의
 interface UserState {
-	uid: string;
-	displayName: string;
+	user_id: string;
+	display_name: string;
+	profile_img: string;
 	email: string;
 	isAuthenticated: boolean;
-	setUser: (user: { uid: string; displayName: string; email: string }) => void;
+	setUser: (user: {
+		user_id: string;
+		display_name: string;
+		email: string;
+	}) => void;
 	clearUser: () => void;
 }
 
@@ -15,21 +20,22 @@ interface UserState {
 export const useUserStore = create(
 	persist<UserState>(
 		(set) => ({
-			uid: '',
-			displayName: '',
+			user_id: '',
+			display_name: '',
+			profile_img: '',
 			email: '',
 			isAuthenticated: false,
 			setUser: (user) =>
 				set({
-					uid: user.uid,
-					displayName: user.displayName,
+					user_id: user.user_id,
+					display_name: user.display_name,
 					email: user.email,
 					isAuthenticated: true,
 				}),
 			clearUser: () =>
 				set({
-					uid: '',
-					displayName: '',
+					user_id: '',
+					display_name: '',
 					email: '',
 					isAuthenticated: false,
 				}),

@@ -4,6 +4,7 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
+	updateProfile,
 } from 'firebase/auth';
 
 // 쿠키 설정
@@ -40,12 +41,24 @@ export async function logout() {
 }
 
 // 회원가입 함수
-export async function signup(email: string, password: string) {
+export async function signup(
+	email: string,
+	password: string,
+	display_name: string,
+) {
 	const userCredential = await createUserWithEmailAndPassword(
 		auth,
 		email,
 		password,
 	);
-	setCookie('uid', userCredential.user.uid, 60 * 60 * 24 * 7);
+	if (userCredential.user) {
+		await updateProfile(userCredential.user, {
+			displayName: display_name,
+		}).catch((error) => {
+			console.log('auth error: ', error);
+		});
+		setCookie('uid', userCredential.user.uid, 60 * 60 * 24 * 7);
+	}
+
 	return userCredential.user;
 }

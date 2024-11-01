@@ -2,7 +2,6 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useUserStore } from '@/store/auth/useAuthStore';
 import { registerSchema } from '@/libs/auth/authValidation';
 
 const RegisterForm = () => {
@@ -10,34 +9,31 @@ const RegisterForm = () => {
 		email: string;
 		password: string;
 		checkPassword: string;
-		userName: string;
+		display_name: string;
 	}>({
 		defaultValues: {
 			email: '',
 			password: '',
 			checkPassword: '',
-			userName: '',
+			display_name: '',
 		},
 		resolver: zodResolver(registerSchema),
 	});
 
-	const setUser = useUserStore((state) => state.setUser);
-
-	const signupUser = async (data: { email: string; password: string }) => {
+	const signupUser = async (data: {
+		email: string;
+		password: string;
+		display_name: string;
+	}) => {
 		try {
-			const res = await fetch('/api/auth/signup', {
+			const res = await fetch('/api/auth/register', {
 				method: 'POST',
 				body: JSON.stringify(data),
 				headers: { 'Content-Type': 'application/json' },
 			});
 
 			if (res.ok) {
-				const userData = await res.json();
-				setUser({
-					uid: userData.uid,
-					displayName: userData.displayName,
-					email: userData.email,
-				});
+				window.location.reload();
 			} else {
 				// react hot toast message
 				console.log('회원가입 실패');
@@ -69,7 +65,6 @@ const RegisterForm = () => {
 				<FormInputWrap>
 					<FormInput
 						type="password"
-						id="checkPassword"
 						placeholder="비밀번호 확인"
 						{...register('checkPassword')}
 					/>
@@ -78,9 +73,8 @@ const RegisterForm = () => {
 				<FormInputWrap>
 					<FormInput
 						type="text"
-						id="userName"
 						placeholder="사용자 이름"
-						{...register('userName')}
+						{...register('display_name')}
 					/>
 				</FormInputWrap>
 				{/* 회원가입 버튼 */}

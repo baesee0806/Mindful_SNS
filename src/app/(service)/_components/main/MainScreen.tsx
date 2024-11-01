@@ -9,17 +9,39 @@ import {
 	Heart,
 	ThumbsUp,
 } from 'lucide-react';
+import { useEffect } from 'react';
+import { auth } from '@/libs/firebase/firebaseClient';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useUserStore } from '@/store/auth/useAuthStore';
 
 const MainScreen = () => {
+	const { setUser } = useUserStore();
+
+	useEffect(() => {
+		const firebase = auth;
+		onAuthStateChanged(firebase, (user) => {
+			if (user) {
+				setUser({
+					user_id: user.uid,
+					display_name: user.displayName as string,
+					email: user.email as string,
+				});
+				console.log(user);
+			} else {
+				console.log('no user');
+			}
+		});
+	}, [setUser]);
+
 	return (
 		<Container>
 			{/* screen */}
-			<ContentScreen>
-				<ContentSearchContainer>
+			<FeedScreen>
+				<FeedSearchContainer>
 					<Search />
 					<input type="text" placeholder="검색" />
-				</ContentSearchContainer>
-				<ContentItemContainer>
+				</FeedSearchContainer>
+				<FeedItemContainer>
 					<UserInfoHeaderContainer>
 						<UserInfoWrapper>
 							<CircleUserRound />
@@ -28,31 +50,31 @@ const MainScreen = () => {
 						</UserInfoWrapper>
 						<Ellipsis />
 					</UserInfoHeaderContainer>
-					<ContentImage
+					<FeedImage
 						src={'https://picsum.photos/582/680'}
 						alt=""
 						width={582}
 						height={580}
 					/>
-					<ContentOptionContainer>
+					<FeedOptionContainer>
 						<Heart />
 						<MessageSquareHeart />
-					</ContentOptionContainer>
-					<ContentLikeContainer>
+					</FeedOptionContainer>
+					<FeedLikeContainer>
 						<ThumbsUp />
 						<p>좋아요 ##개</p>
-					</ContentLikeContainer>
-				</ContentItemContainer>
-				<ContentCreateUserCommentContainer>
+					</FeedLikeContainer>
+				</FeedItemContainer>
+				<FeedCreateUserCommentContainer>
 					<CommentUserName>user_name</CommentUserName>
 					<CommentContent>commentcommentcommentcommentcomment</CommentContent>
-				</ContentCreateUserCommentContainer>
+				</FeedCreateUserCommentContainer>
 				<CommentAllView>댓글 ##개 모두보기</CommentAllView>
 				<CommentInputContainer>
 					<input type="text" placeholder="댓글 달기..." />
 				</CommentInputContainer>
 				<Line />
-			</ContentScreen>
+			</FeedScreen>
 			<RightSidebar>
 				<Image
 					src={'https://picsum.photos/160/600'}
@@ -75,7 +97,7 @@ const Container = styled.div`
 	}
 `;
 // screen
-const ContentScreen = styled.div`
+const FeedScreen = styled.div`
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -83,7 +105,7 @@ const ContentScreen = styled.div`
 	scroll-behavior: smooth;
 	overflow: auto;
 `;
-const ContentSearchContainer = styled.div`
+const FeedSearchContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -112,7 +134,7 @@ const ContentSearchContainer = styled.div`
 		display: none;
 	}
 `;
-const ContentItemContainer = styled.div`
+const FeedItemContainer = styled.div`
 	width: 582px;
 	@media only screen and (max-width: 758px) {
 		width: 468px;
@@ -131,14 +153,14 @@ const UserInfoWrapper = styled.div`
 		margin-left: 8px;
 	}
 `;
-const ContentImage = styled(Image)`
+const FeedImage = styled(Image)`
 	width: 100%;
 	border-radius: 8px;
 	@media only screen and (max-width: 758px) {
 		height: 585px;
 	}
 `;
-const ContentOptionContainer = styled.div`
+const FeedOptionContainer = styled.div`
 	width: 100%;
 	display: flex;
 	margin-top: 10px;
@@ -150,7 +172,7 @@ const ContentOptionContainer = styled.div`
 		margin-left: 10px;
 	}
 `;
-const ContentLikeContainer = styled.div`
+const FeedLikeContainer = styled.div`
 	height: 24px;
 	display: flex;
 	align-items: center;
@@ -159,7 +181,7 @@ const ContentLikeContainer = styled.div`
 		margin-left: 10px;
 	}
 `;
-const ContentCreateUserCommentContainer = styled.div`
+const FeedCreateUserCommentContainer = styled.div`
 	width: 582px;
 	display: flex;
 	align-items: center;
