@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import { auth } from '@/libs/firebase/firebaseClient';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useUserStore } from '@/store/auth/useAuthStore';
+import { useQuery } from '@tanstack/react-query';
+import { getFeedsApi } from '@/libs/feed/feedApi';
 
 const MainScreen = () => {
 	const { setUser } = useUserStore();
@@ -32,7 +34,12 @@ const MainScreen = () => {
 			}
 		});
 	}, [setUser]);
+	const { data: feeds, isLoading } = useQuery({
+		queryKey: ['FEEDS'],
+		queryFn: getFeedsApi,
+	});
 
+	if (isLoading) return <p>Loading...</p>;
 	return (
 		<Container>
 			{/* screen */}
@@ -41,7 +48,41 @@ const MainScreen = () => {
 					<Search />
 					<input type="text" placeholder="검색" />
 				</FeedSearchContainer>
-				<FeedItemContainer>
+				{feeds?.map((el) => {
+					return (
+						<FeedItemContainer key={el.uid}>
+							<UserInfoHeaderContainer>
+								<UserInfoWrapper>
+									<CircleUserRound />
+									<p>user_nameuser_name</p>
+									<p>1분전</p>
+								</UserInfoWrapper>
+								<Ellipsis />
+							</UserInfoHeaderContainer>
+							<FeedImage src={el.img} alt="" width={582} height={580} />
+							<FeedOptionContainer>
+								<Heart />
+								<MessageSquareHeart />
+							</FeedOptionContainer>
+							<FeedLikeContainer>
+								<ThumbsUp />
+								<p>좋아요 ##개</p>
+							</FeedLikeContainer>
+							<FeedCreateUserCommentContainer>
+								<CommentUserName>user_name</CommentUserName>
+								<CommentContent>
+									commentcommentcommentcommentcomment
+								</CommentContent>
+							</FeedCreateUserCommentContainer>
+							<CommentAllView>댓글 ##개 모두보기</CommentAllView>
+							<CommentInputContainer>
+								<input type="text" placeholder="댓글 달기..." />
+							</CommentInputContainer>
+							<Line />
+						</FeedItemContainer>
+					);
+				})}
+				{/* <FeedItemContainer>
 					<UserInfoHeaderContainer>
 						<UserInfoWrapper>
 							<CircleUserRound />
@@ -64,16 +105,16 @@ const MainScreen = () => {
 						<ThumbsUp />
 						<p>좋아요 ##개</p>
 					</FeedLikeContainer>
-				</FeedItemContainer>
-				<FeedCreateUserCommentContainer>
-					<CommentUserName>user_name</CommentUserName>
-					<CommentContent>commentcommentcommentcommentcomment</CommentContent>
-				</FeedCreateUserCommentContainer>
-				<CommentAllView>댓글 ##개 모두보기</CommentAllView>
-				<CommentInputContainer>
-					<input type="text" placeholder="댓글 달기..." />
-				</CommentInputContainer>
-				<Line />
+					<FeedCreateUserCommentContainer>
+						<CommentUserName>user_name</CommentUserName>
+						<CommentContent>commentcommentcommentcommentcomment</CommentContent>
+					</FeedCreateUserCommentContainer>
+					<CommentAllView>댓글 ##개 모두보기</CommentAllView>
+					<CommentInputContainer>
+						<input type="text" placeholder="댓글 달기..." />
+					</CommentInputContainer>
+					<Line />
+				</FeedItemContainer> */}
 			</FeedScreen>
 			<RightSidebar>
 				<Image

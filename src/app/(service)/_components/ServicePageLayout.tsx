@@ -9,6 +9,8 @@ import {
 	Search,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
 const ServicePageLayout = ({ children }: { children: React.ReactNode }) => {
 	const [isMessagePage, setIsMessagePage] = useState(false);
 
@@ -22,7 +24,7 @@ const ServicePageLayout = ({ children }: { children: React.ReactNode }) => {
 		<Container>
 			{/* side menu */}
 			<SidebarContainer $ismessagepage={isMessagePage.toString()}>
-				<SidebarHeader>
+				<SidebarHeader href={'/'}>
 					<TentTree />
 					<h1>Mindful</h1>
 				</SidebarHeader>
@@ -30,19 +32,19 @@ const ServicePageLayout = ({ children }: { children: React.ReactNode }) => {
 					<Search />
 					<input type="text" placeholder="검색" />
 				</SearchBarContainer>
-				<SidebarMenuItem>
+				<SidebarMenuItem href={'/'}>
 					<House />
 					<p>Home</p>
 				</SidebarMenuItem>
-				<SidebarMenuItem>
+				<SidebarMenuItem href={'/profile'}>
 					<CircleUserRound />
 					<p>Profile</p>
 				</SidebarMenuItem>
-				<SidebarMenuItem>
+				<SidebarMenuItem href={'/message'}>
 					<Send />
 					<p>Message</p>
 				</SidebarMenuItem>
-				<SidebarMenuItem>
+				<SidebarMenuItem href={''}>
 					<SquarePlus />
 					<p>Add Write</p>
 				</SidebarMenuItem>
@@ -86,7 +88,7 @@ const SidebarContainer = styled.div<{ $ismessagepage: string }>`
 		justify-content: space-between;
 	}
 `;
-const SidebarHeader = styled.div`
+const SidebarHeader = styled(Link)`
 	display: flex;
 	align-items: center;
 	margin: 37px 0 13px 37px;
@@ -137,7 +139,7 @@ const SearchBarContainer = styled.div`
 	}
 `;
 
-const SidebarMenuItem = styled.div`
+const SidebarMenuItem = styled(Link)`
 	width: 70%;
 	display: flex;
 	align-items: center;
