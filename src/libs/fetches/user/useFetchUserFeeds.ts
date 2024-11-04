@@ -1,4 +1,4 @@
-import { getUserFeedsApi } from '@/libs/apis/userApi';
+import { getUserFeedsApi } from '@/libs/apis/user/userApi';
 import { useQuery } from '@tanstack/react-query';
 
 export const useFetchUserFeeds = (uid: string) => {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { signup } from '@/libs/auth/auth';
-import { addUserInfoApi } from '@/libs/apis/userApi';
+import { signup } from '@/libs/auth/authApi';
+import { addUserInfoApi } from '@/libs/apis/user/userApi';
 
 export async function POST(request: Request) {
 	const { email, password, displayName } = await request.json();

@@ -1,6 +1,6 @@
 'use client';
 
-import { useFetchUser } from '@/libs/auth/hooks/useFetchUser';
+import { useFetchUser } from '@/libs/fetches/user/useFetchUser';
 import { useUserStore } from '@/store/auth/useAuthStore';
 import Image from 'next/image';
 import Link from 'next/link';

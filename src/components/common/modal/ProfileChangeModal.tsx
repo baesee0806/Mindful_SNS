@@ -1,6 +1,6 @@
 'use client';
 
-import { getUserInfoApi } from '@/libs/apis/userApi';
+import { getUserInfoApi } from '@/libs/apis/user/userApi';
 import { useUserStore } from '@/store/auth/useAuthStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';

@@ -1,4 +1,4 @@
-import { updateUserInfoApi, uploadUserImg } from '@/libs/apis/userApi';
+import { updateUserInfoApi, uploadUserImg } from '@/libs/apis/user/userApi';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

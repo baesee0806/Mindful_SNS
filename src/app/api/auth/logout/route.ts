@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { logout } from '@/libs/auth/auth';
+import { logout } from '@/libs/auth/authApi';
 
 export async function POST(request: Request) {
 	try {

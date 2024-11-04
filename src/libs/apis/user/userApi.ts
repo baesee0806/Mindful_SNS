@@ -8,7 +8,7 @@ import {
 	collection,
 	where,
 } from 'firebase/firestore';
-import { db, storage } from '../firebase/firebaseClient';
+import { db, storage } from '../../firebase/firebaseClient';
 import {
 	getDownloadURL,
 	ref,

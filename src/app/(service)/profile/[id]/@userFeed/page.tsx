@@ -1,6 +1,6 @@
 'use client';
 
-import { useFetchUserFeeds } from '@/libs/auth/hooks/useFetchUserFeeds';
+import { useFetchUserFeeds } from '@/libs/fetches/user/useFetchUserFeeds';
 import { useUserStore } from '@/store/auth/useAuthStore';
 import styled from 'styled-components';
 

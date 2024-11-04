@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/libs/auth/authValidation';
 import { auth } from '@/libs/firebase/firebaseClient';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { addUserInfoApi } from '@/libs/apis/userApi';
+import { addUserInfoApi } from '@/libs/apis/user/userApi';
 
 const LoginFrom = () => {
 	const { register, handleSubmit } = useForm<{

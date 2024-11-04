@@ -6,7 +6,7 @@ import {
 	startAfter,
 	limit,
 } from 'firebase/firestore';
-import { db } from '../firebase/firebaseClient';
+import { db } from '../../firebase/firebaseClient';
 interface GetFeedsApiParams {
 	page: number;
 }

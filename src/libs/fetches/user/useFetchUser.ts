@@ -1,4 +1,4 @@
-import { getUserInfoApi } from '@/libs/apis/userApi';
+import { getUserInfoApi } from '@/libs/apis/user/userApi';
 import { useQuery } from '@tanstack/react-query';
 
 export const useFetchUser = (uid: string) => {
