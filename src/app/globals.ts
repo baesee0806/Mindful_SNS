@@ -14,6 +14,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Helvetica", "Arial", sans-serif;
     
   }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   ::-webkit-scrollbar {
     display: none;
 }

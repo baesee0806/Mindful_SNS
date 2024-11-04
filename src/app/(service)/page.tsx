@@ -4,19 +4,22 @@ import {
 	dehydrate,
 } from '@tanstack/react-query';
 
-import MainScreen from './_components/main/MainScreen';
-import { getFeedsApi } from '@/libs/feed/feedApi';
+import { handleFeedFetch } from '@/libs/fetches/feed/handleFetch';
+
+import MainLayout from '@/components/main/layout/MainLayout';
 
 const Home = async () => {
 	const queryClient = new QueryClient();
-	await queryClient.prefetchQuery({
-		queryKey: ['FEEDS'],
-		queryFn: getFeedsApi,
+	await queryClient.prefetchInfiniteQuery({
+		queryKey: ['FEEDLIST'],
+		queryFn: ({ pageParam = 1 }) => handleFeedFetch(pageParam),
+		initialPageParam: 1,
+		staleTime: 30 * 1000,
 	});
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<MainScreen />
+			<MainLayout />
 		</HydrationBoundary>
 	);
 };

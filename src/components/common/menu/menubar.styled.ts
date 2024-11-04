@@ -1,75 +1,8 @@
-'use client';
-import styled from 'styled-components';
-import {
-	TentTree,
-	House,
-	Send,
-	CircleUserRound,
-	SquarePlus,
-	Search,
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import styled from 'styled-components';
 
-const ServicePageLayout = ({ children }: { children: React.ReactNode }) => {
-	const [isMessagePage, setIsMessagePage] = useState(false);
-
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			// 클라이언트 사이드에서만 실행
-			setIsMessagePage(window.location.pathname.includes('/message'));
-		}
-	}, []);
-	return (
-		<Container>
-			{/* side menu */}
-			<SidebarContainer $ismessagepage={isMessagePage.toString()}>
-				<SidebarHeader href={'/'}>
-					<TentTree />
-					<h1>Mindful</h1>
-				</SidebarHeader>
-				<SearchBarContainer>
-					<Search />
-					<input type="text" placeholder="검색" />
-				</SearchBarContainer>
-				<SidebarMenuItem href={'/'}>
-					<House />
-					<p>Home</p>
-				</SidebarMenuItem>
-				<SidebarMenuItem href={'/profile'}>
-					<CircleUserRound />
-					<p>Profile</p>
-				</SidebarMenuItem>
-				<SidebarMenuItem href={'/message'}>
-					<Send />
-					<p>Message</p>
-				</SidebarMenuItem>
-				<SidebarMenuItem href={''}>
-					<SquarePlus />
-					<p>Add Write</p>
-				</SidebarMenuItem>
-			</SidebarContainer>
-			{children}
-		</Container>
-	);
-};
-
-export default ServicePageLayout;
-
-const Container = styled.div`
-	min-height: 100vh;
-	display: grid;
-	grid-template-columns: 230px auto;
-	@media only screen and (max-width: 1200px) {
-		grid-template-columns: 0.1fr auto;
-	}
-	@media only screen and (max-width: 758px) {
-		grid-template-columns: auto;
-		grid-template-rows: 1fr auto;
-	}
-`;
 // side menu
-const SidebarContainer = styled.div<{ $ismessagepage: string }>`
+const Container = styled.div<{ $ismessagepage: string }>`
 	min-width: 70px;
 	height: 100%;
 	border-right: 1px solid #262626;
@@ -88,7 +21,7 @@ const SidebarContainer = styled.div<{ $ismessagepage: string }>`
 		justify-content: space-between;
 	}
 `;
-const SidebarHeader = styled(Link)`
+const LogoWarapper = styled(Link)`
 	display: flex;
 	align-items: center;
 	margin: 37px 0 13px 37px;
@@ -112,7 +45,7 @@ const SidebarHeader = styled(Link)`
 		}
 	}
 `;
-const SearchBarContainer = styled.div`
+const MobileSearchContainer = styled.div`
 	display: none;
 	@media only screen and (max-width: 758px) {
 		display: flex;
@@ -139,7 +72,7 @@ const SearchBarContainer = styled.div`
 	}
 `;
 
-const SidebarMenuItem = styled(Link)`
+const MenuItem = styled(Link)`
 	width: 70%;
 	display: flex;
 	align-items: center;
@@ -173,3 +106,5 @@ const SidebarMenuItem = styled(Link)`
 		display: none;
 	}
 `;
+
+export { Container, LogoWarapper, MobileSearchContainer, MenuItem };
