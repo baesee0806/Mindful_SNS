@@ -47,7 +47,7 @@ const Menubar = () => {
 				<p>Message</p>
 			</S.MenuItem>
 			{/* Add Write */}
-			<S.MenuItem href={''}>
+			<S.MenuItem href={'/new'}>
 				<SquarePlus />
 				<p>Add Write</p>
 			</S.MenuItem>
