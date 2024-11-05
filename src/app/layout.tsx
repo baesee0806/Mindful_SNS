@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 	description: '바른 SNS 서비스',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
