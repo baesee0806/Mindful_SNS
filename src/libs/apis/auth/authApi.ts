@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { auth } from '../firebase/firebaseClient';
+import { auth } from '@/libs/firebase/firebaseClient';
 import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,

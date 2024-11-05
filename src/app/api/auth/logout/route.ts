@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
-import { logout } from '@/libs/auth/authApi';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/libs/firebase/firebaseClient';
+import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
 	try {
-		await logout();
+		await signOut(auth);
+		cookies().delete('uid');
 		return NextResponse.rewrite(new URL('/auth/login', request.url));
 	} catch (error) {
 		if (error instanceof Error) {

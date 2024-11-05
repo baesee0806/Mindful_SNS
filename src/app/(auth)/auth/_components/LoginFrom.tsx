@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import GoogleLogo from '@/assets/svg/google_logo.svg';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/libs/auth/authValidation';
+import { loginSchema } from '@/libs/validations/auth/authValidation';
 import { auth } from '@/libs/firebase/firebaseClient';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { addUserInfoApi } from '@/libs/apis/user/userApi';
+// import { addUserInfoApi } from '@/libs/apis/user/userApi';
 
 const LoginFrom = () => {
 	const { register, handleSubmit } = useForm<{
@@ -42,12 +42,12 @@ const LoginFrom = () => {
 
 			const user = result.user;
 
-			await addUserInfoApi({
-				user_id: user.uid,
-				email: user.email || '',
-				profile_img: user.photoURL || '',
-				display_name: user.displayName || '',
-			});
+			// await addUserInfoApi({
+			// 	user_id: user.uid,
+			// 	email: user.email || '',
+			// 	profile_img: user.photoURL || '',
+			// 	display_name: user.displayName || '',
+			// });
 
 			await fetch('/api/auth/setCookie', {
 				method: 'POST',
