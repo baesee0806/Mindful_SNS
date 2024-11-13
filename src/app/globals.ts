@@ -1,4 +1,5 @@
 'use client';
+import { color } from '@/utils/colors';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -6,8 +7,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
 		padding: 0;
 		border: 0;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: ${color.GLOBALBGC};
+    color: ${color.FONTCOLOR};
   }
 
   body {
