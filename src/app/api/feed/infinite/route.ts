@@ -4,6 +4,7 @@ import {
 	collection,
 	getDocs,
 	limit,
+	orderBy,
 	query,
 	startAfter,
 } from 'firebase/firestore';
@@ -17,14 +18,27 @@ export async function GET(req: NextRequest) {
 		const limitValue = 3; // 페이지당 데이터 수
 
 		// 초기 쿼리 설정
-		let feedQuery = query(docRef, limit(limitValue));
+		let feedQuery = query(
+			docRef,
+			orderBy('created_at', 'desc'),
+			limit(limitValue),
+		);
 
 		if (page > 1) {
 			const previousDocs = await getDocs(
-				query(docRef, limit(limitValue * (page - 1))),
+				query(
+					docRef,
+					orderBy('created_at', 'desc'),
+					limit(limitValue * (page - 1)),
+				),
 			);
 			const lastVisible = previousDocs.docs[previousDocs.docs.length - 1];
-			feedQuery = query(docRef, startAfter(lastVisible), limit(limitValue));
+			feedQuery = query(
+				docRef,
+				orderBy('created_at', 'desc'),
+				startAfter(lastVisible),
+				limit(limitValue),
+			);
 		}
 
 		const docSnap = await getDocs(feedQuery);

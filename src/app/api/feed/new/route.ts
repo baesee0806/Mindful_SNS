@@ -11,11 +11,17 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
 	const formData = await req.formData();
 	const feed_id = formData.get('feed_id') as string;
-	const title = formData.get('title') as string;
 	const content = formData.get('content') as string;
 	const user_id = formData.get('user_id') as string;
 	const img_adress = formData.get('img_adress') as File | Blob | string;
 	try {
+		if (!feed_id || !content || !user_id || !img_adress) {
+			return NextResponse.json(
+				{ error: 'Invalid request parameters' },
+				{ status: 400 },
+			);
+		}
+
 		// 이미지 storage 업로드
 		const feedImage = img_adress;
 		if (!(feedImage instanceof File || feedImage instanceof Blob)) {
@@ -32,7 +38,6 @@ export async function POST(req: NextRequest) {
 		const feedRef = doc(db, 'feeds', feed_id);
 		await setDoc(feedRef, {
 			feed_id,
-			title,
 			content,
 			user_id,
 			img_adress: imgUrl,
@@ -62,6 +67,7 @@ export async function POST(req: NextRequest) {
 				{ status: 500 },
 			);
 		});
+		return NextResponse.json({ feed_id });
 	} catch (error) {
 		console.error('Error adding feed:', error);
 		return NextResponse.json({ error: 'Failed to add feed' }, { status: 500 });
