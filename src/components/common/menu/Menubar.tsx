@@ -2,7 +2,6 @@
 import {
 	CircleUserRound,
 	House,
-	Search,
 	Send,
 	SquarePlus,
 	TentTree,
@@ -26,11 +25,6 @@ const Menubar = () => {
 				<TentTree />
 				<h1>Mindful</h1>
 			</S.LogoWarapper>
-			{/* Mobile Search bar */}
-			<S.MobileSearchContainer>
-				<Search />
-				<input type="text" placeholder="검색" />
-			</S.MobileSearchContainer>
 			{/* Home */}
 			<S.MenuItem href={'/'}>
 				<House />

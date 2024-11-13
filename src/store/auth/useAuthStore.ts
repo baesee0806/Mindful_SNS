@@ -7,7 +7,6 @@ interface UserState {
 	display_name: string;
 	profile_img: string;
 	email: string;
-	isAuthenticated: boolean;
 	setUser: (user: {
 		user_id: string;
 		display_name: string;
@@ -24,20 +23,17 @@ export const useUserStore = create(
 			display_name: '',
 			profile_img: '',
 			email: '',
-			isAuthenticated: false,
 			setUser: (user) =>
 				set({
 					user_id: user.user_id,
 					display_name: user.display_name,
 					email: user.email,
-					isAuthenticated: true,
 				}),
 			clearUser: () =>
 				set({
 					user_id: '',
 					display_name: '',
 					email: '',
-					isAuthenticated: false,
 				}),
 		}),
 		{

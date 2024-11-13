@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 // side menu
 const Container = styled.div<{ $ismessagepage: string }>`
-	min-width: 70px;
+	width: 100%;
+	min-width: 60px;
 	height: 100%;
 	border-right: 1px solid #262626;
 	display: flex;
@@ -13,12 +14,12 @@ const Container = styled.div<{ $ismessagepage: string }>`
 		align-items: center;
 	}
 	@media only screen and (max-width: 758px) {
+		position: fixed;
 		${(props) => (props.$ismessagepage == 'true' ? 'display: none;' : '')}
-		height: 89px;
+		height: 70px;
 		border-right: none;
 		border-bottom: 1px solid #262626;
-		flex-direction: row;
-		justify-content: space-between;
+		justify-content: center;
 	}
 `;
 const LogoWarapper = styled(Link)`
@@ -42,32 +43,6 @@ const LogoWarapper = styled(Link)`
 		align-items: center;
 		& > h1 {
 			display: block;
-		}
-	}
-`;
-const MobileSearchContainer = styled.div`
-	display: none;
-	@media only screen and (max-width: 758px) {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100%;
-		width: 100%;
-		& > svg {
-			position: relative;
-			top: 0;
-			left: 40px;
-		}
-		& > input {
-			width: 90%;
-			height: 50%;
-			border-radius: 8px;
-			border: 1px solid #262626;
-			padding-left: 50px;
-			font-size: 16px;
-			&:focus {
-				outline: none;
-			}
 		}
 	}
 `;
@@ -107,4 +82,4 @@ const MenuItem = styled(Link)`
 	}
 `;
 
-export { Container, LogoWarapper, MobileSearchContainer, MenuItem };
+export { Container, LogoWarapper, MenuItem };

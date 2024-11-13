@@ -1,22 +1,21 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
-import MainLayout from '@/components/main/layout/MainLayout';
-import { fetchInfinityFeeds } from '@/libs/feed';
+import { fetchInfinityFeeds, INFINITE_FEED_KEY } from '@/libs/feed';
 import { createQueryClient } from '@/providers/createQueryClient';
+import FeedScreen from '@/components/main/screen/FeedScreen';
 
 const Home = async () => {
 	const queryClient = createQueryClient();
 
 	await queryClient.prefetchInfiniteQuery({
-		queryKey: ['FEEDLIST'],
-		queryFn: async ({ pageParam = 1 }) => await fetchInfinityFeeds(pageParam),
+		queryKey: [INFINITE_FEED_KEY],
+		queryFn: async () => await fetchInfinityFeeds(1),
 		initialPageParam: 1,
-		staleTime: 30 * 1000,
 	});
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<MainLayout />
+			<FeedScreen />
 		</HydrationBoundary>
 	);
 };

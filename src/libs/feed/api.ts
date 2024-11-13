@@ -10,21 +10,27 @@ export const fetchInfinityFeeds = async (pageParam: number) => {
 	return data;
 };
 
-export const addFeed = async (data: NewFeedDTO) => {
+export const addFeed = async ({
+	feed_id,
+	content,
+	user_id,
+	img_adress,
+}: NewFeedDTO) => {
 	const addFeedDTO = new FormData();
-	addFeedDTO.append('feed_id', crypto.randomUUID());
-	addFeedDTO.append('title', data.title);
-	addFeedDTO.append('content', data.content);
-	addFeedDTO.append('user_id', data.user_id);
-	addFeedDTO.append('img_adress', data.img_adress);
+	addFeedDTO.append('feed_id', feed_id);
+	addFeedDTO.append('content', content);
+	addFeedDTO.append('user_id', user_id);
+	addFeedDTO.append('img_adress', img_adress);
 
 	try {
-		await fetch(`/api/feed/new`, {
+		const res = await fetch(`/api/feed/new`, {
 			method: 'POST',
 			body: addFeedDTO,
 		}).catch((e) => {
 			console.log('False Add Feed POST', e);
 		});
+
+		return res;
 	} catch (e) {
 		console.log('False Add Feed POST', e);
 	}

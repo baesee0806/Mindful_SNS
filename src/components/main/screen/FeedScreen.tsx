@@ -1,16 +1,35 @@
 'use client';
 // styled
 import * as S from './feedScreen.styled';
-// 이미지 검색 아이콘
-import { Search } from 'lucide-react';
 // hooks
 import { useEffect } from 'react';
 import FeedItem from '../item/FeedItem';
 import { useFetchInfinityFeeds } from '@/libs/feed/hooks/useFetchInfinityFeeds';
+import { useUserStore } from '@/store/auth/useAuthStore';
 
 const FeedScreen = () => {
 	const { data, isFetchingNextPage, hasNextPage, fetchNextPage, isLoading } =
 		useFetchInfinityFeeds();
+	// 유저 정보 저장
+	const { setUser } = useUserStore();
+
+	const getUserInfo = async () => {
+		const res = await fetch('/api/user', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => res.json());
+		setUser({
+			user_id: res.user_id,
+			display_name: res.display_name,
+			email: res.email,
+		});
+	};
+
+	useEffect(() => {
+		getUserInfo();
+	}, []);
 
 	// 스크롤 맨 밑 도착시에 다음 페이지 호출
 	useEffect(() => {
@@ -31,18 +50,15 @@ const FeedScreen = () => {
 
 	return (
 		<S.Container>
-			{/* 데스크탑 검색 창 */}
-			<S.DesktopSearchContainer>
-				<Search />
-				<input type="text" placeholder="검색" />
-			</S.DesktopSearchContainer>
-			{/* Feed item */}
 			{isLoading && <p>Loading...</p>}
-			{data?.pages
-				.flatMap((page) => page.feeds)
-				.map((feed) => (
-					<FeedItem key={feed.uid} />
-				))}
+			<S.FeedWrapper>
+				{/* Feed item */}
+				{data?.pages
+					.flatMap((page) => page.feeds)
+					.map((feed) => (
+						<FeedItem key={feed.feed_id} feed={feed} />
+					))}
+			</S.FeedWrapper>
 			{isFetchingNextPage && <p>Loading more...</p>}
 		</S.Container>
 	);

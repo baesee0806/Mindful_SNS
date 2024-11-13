@@ -8,6 +8,5 @@ export const useFetchInfinityFeeds = () => {
 		queryFn: async ({ pageParam = 1 }) => await fetchInfinityFeeds(pageParam),
 		initialPageParam: 1,
 		getNextPageParam: (lastPage) => lastPage.nextPage,
-		staleTime: 30 * 1000,
 	});
 };
