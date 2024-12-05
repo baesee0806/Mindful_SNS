@@ -1,7 +1,6 @@
 'use client';
 
 import { useImage } from '@/hooks/useImage';
-import { ChangeEvent, useRef, useState } from 'react';
 import * as S from './createFeedModal.styled';
 import { useAddFeed } from '@/libs/feed/hooks/useAddFeed';
 import { useUserStore } from '@/store/auth/useAuthStore';
@@ -9,29 +8,18 @@ import { ImageIcon } from 'lucide-react';
 import { color } from '@/utils/colors';
 import ModalLayout from './common/ModalLayout';
 import { useNavigation } from '@/hooks/useNavigation';
+import { useTextarea } from '@/hooks/useTextarea';
 
 const CreateFeedModal = () => {
 	const { goBack } = useNavigation();
 
-	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-	const [content, setContent] = useState<string>('');
-	const maxLength = 500;
-
-	// 텍스트 영역 높이 자동 조절
-	const handleResize = () => {
-		if (textareaRef.current) {
-			textareaRef.current.style.height = 'auto';
-			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-		}
-	};
-	// 텍스트 영역 값 변경
-	const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-		const newText = event.target.value;
-		if (newText.length <= maxLength) {
-			setContent(newText);
-			handleResize();
-		}
-	};
+	const {
+		textareaRef,
+		maxLength,
+		value: content,
+		handleResize,
+		handleChange,
+	} = useTextarea();
 
 	const { image, imageFile, handleImageChange: imgCange } = useImage();
 
@@ -51,7 +39,7 @@ const CreateFeedModal = () => {
 			feed_id,
 			user_id,
 			content,
-			img_adress: imageFile as File,
+			img_adress: imageFile as File | null,
 		});
 	};
 

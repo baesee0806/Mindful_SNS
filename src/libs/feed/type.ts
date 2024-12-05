@@ -15,5 +15,5 @@ export interface NewFeedDTO {
 	feed_id: string;
 	content: string;
 	user_id: string;
-	img_adress: File | Blob | string;
+	img_adress: File | Blob | string | null;
 }

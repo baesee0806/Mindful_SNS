@@ -29,7 +29,9 @@ export const addFeed = async ({
 	addFeedDTO.append('feed_id', feed_id);
 	addFeedDTO.append('content', content);
 	addFeedDTO.append('user_id', user_id);
-	addFeedDTO.append('img_adress', img_adress);
+	if (img_adress !== null) {
+		addFeedDTO.append('img_adress', img_adress);
+	}
 
 	try {
 		const res = await fetch(`/api/feed/new`, {

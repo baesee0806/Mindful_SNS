@@ -56,7 +56,7 @@ const FeedScreen = () => {
 				{data?.pages
 					.flatMap((page) => page.feeds)
 					.map((feed) => (
-						<FeedItem key={feed.feed_id} feed={feed} />
+						<FeedItem key={feed?.feed_id} feed={feed} />
 					))}
 			</S.FeedWrapper>
 			{isFetchingNextPage && <p>Loading more...</p>}

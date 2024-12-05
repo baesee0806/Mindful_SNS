@@ -2,7 +2,7 @@ import * as S from './feedItem.styled';
 import { IFeed } from '@/libs/feed';
 import { getTime } from '@/utils/getTime';
 import { color } from '@/utils/colors';
-import { useQuery } from '@tanstack/react-query';
+import { useFetchUser } from '@/libs/fetches/user/useFetchUser';
 
 const FeedItem = ({ feed }: { feed: IFeed }) => {
 	const {
@@ -15,21 +15,7 @@ const FeedItem = ({ feed }: { feed: IFeed }) => {
 		comment_count,
 	} = feed;
 
-	// 수정 포인트
-	const getUserName = async () => {
-		const res = await fetch(`/api/user/info?user_id=${user_id}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => res.json());
-		return res;
-	};
-
-	const { data: user } = useQuery({
-		queryKey: ['USER'],
-		queryFn: () => getUserName(),
-	});
+	const { data: user } = useFetchUser(user_id);
 
 	return (
 		<S.Container key={feed_id}>

@@ -13,7 +13,6 @@ interface LastPage {
 
 const Home = async () => {
 	const queryClient = new QueryClient();
-
 	await queryClient.fetchInfiniteQuery({
 		queryKey: [INFINITE_FEED_KEY],
 		queryFn: fetchInfinityFeeds,

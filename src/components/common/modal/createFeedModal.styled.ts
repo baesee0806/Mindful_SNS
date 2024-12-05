@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const CreateFeedWrapper = styled.div`
 	width: 600px;
-	max-height: 800px;
+	max-height: 600px;
 	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
@@ -92,7 +92,7 @@ const Content = styled.textarea`
 `;
 const PrivewImage = styled(Image)`
 	width: 90%;
-	height: 50%;
+	min-height: 300px;
 	border-radius: 15px;
 `;
 const OptionWrapper = styled.div`

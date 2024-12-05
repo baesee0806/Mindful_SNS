@@ -1,19 +1,13 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/libs/firebase/firebaseClient';
 import { doc, getDoc } from 'firebase/firestore';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
 
-export async function GET() {
-	const user_id = cookies().get('uid')?.value;
+export async function GET(req: NextRequest) {
+	const { searchParams } = new URL(req.url);
+	const feed_id = searchParams.get('feed_id');
 
-	if (!user_id) {
-		return NextResponse.json(
-			{ error: 'Failed to get user info' },
-			{ status: 500 },
-		);
-	}
 	try {
-		const docRef = doc(db, 'users', user_id as string);
+		const docRef = doc(db, 'feeds', feed_id as string);
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
@@ -26,7 +20,7 @@ export async function GET() {
 			console.error(error.message);
 		}
 		return NextResponse.json(
-			{ error: 'Failed to get user info' },
+			{ error: 'Failed to get feed doc' },
 			{ status: 500 },
 		);
 	}
